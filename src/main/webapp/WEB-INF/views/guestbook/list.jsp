@@ -24,8 +24,6 @@
 					action="${pageContext.servletContext.contextPath }/guestbook1/insert" method="post">
 					<table>
 						<tr>
-						
-			
 							<td>이름</td>
 							<td><input type="text" name="writer"></td>
 							<td>비밀번호</td>

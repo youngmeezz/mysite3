@@ -1,8 +1,6 @@
 package kr.co.itcen.mysite.vo;
 
 public class BoardVo {
-	
-	
 
 	private Long no;
 	private String title;

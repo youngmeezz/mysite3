@@ -36,11 +36,10 @@
 							<c:if test="${vo.depth gt 0}">
 								<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/>
 							</c:if>
-							
-							<td><a href="${pageContext.servletContext.contextPath }/board?a=viewform&no=${vo.no}&userNo=${vo.userNo}">
+							<a href="${pageContext.servletContext.contextPath }/board/view&no=${vo.no}&userNo=${vo.userNo}">
 								<c:choose>
 									<c:when test="${vo.status eq 0}">
-										<td>삭제된 게시물 입니다.</td>
+										삭제된 게시물 입니다.
 									</c:when>
 									<c:otherwise>
 										${vo.title }
@@ -72,7 +71,7 @@
 				
 				<!-- session(로그인 된 상태)이 있으면 글쓰기 창 보이고 session(로그인 안 된 상태이면) 글쓰기 창 가리기 -->
 				<c:if test="${not empty authUser }">
-				<a href="${pageContext.servletContext.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+				<a href="${pageContext.servletContext.contextPath }/board/write" id="new-book">글쓰기</a>
 				</c:if>
 				</div>		
 			</div>

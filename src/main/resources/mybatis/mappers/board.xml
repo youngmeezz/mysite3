@@ -4,45 +4,44 @@
 <mapper namespace="board">
 
 <!-- 전체 조회 -->
-	<select id="select" parameterType="boardvo" resultType="boardvo">
+	<select id="getList" parameterType="boardvo" resultType="boardvo">
 		<![CDATA[
-			 select b.no as no,
-			   		b.title as title,
-			  	 	u.name as name,
-			   		b.hit as hit,
-			   		b.reg_date as registerDate,
-			   		b.depth as depth,
-			   		b.status as status 
+			 select b.no as 'no',
+			   		b.title as 'title',
+			  	 	u.name as 'name',
+			   		b.hit as 'hit',
+			   		b.reg_date as 'registerDate',
+			   		b.depth as 'depth',
+			   		b.status as 'status' 
 				from user u, board b 
 			 where u.no = b.user_no 
-				and (title like #{title} or contents like #{contents}) 
 			order by b.g_no desc, b.o_no asc 
 			limit 0,10
 		]]>
 	</select>
 
 <!-- view 조회 -->
-	<select id="viewSelect" parameterType="boardvo" resultType="boardvo">
+	<select id="getByNo" parameterType="boardvo" resultType="boardvo">
 			<![CDATA[
 				select  title as title,
 						contents as contents,
 						no as no,
 						user_no as userNo,
-						g_no as groupNumber ,
+						g_no as groupNumber,
 						o_no as orderNumber,
 						depth as depth 
 					from board 
 				where no = #{no}
 			]]>
-		</select>
+	</select>
 	
 	
 <!-- 글 삽입  -->
 	<insert id="insert" parameterType="boardvo">
 		<![CDATA[
 		insert 
-			into user 
-		values(null,#{name},#{email},#{password},#{gender}, now())
+			into board
+		 values(null,#{title},#{contents},0,now(),(select ifnull(max(g_no) + 1, 1) from board as b),#{orderNumber},#{depth},#{userNo},1);
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			<![CDATA[
@@ -95,7 +94,7 @@
 
 
 <!-- 글 삭제  -->
-	<update id="delete" parameterType="boardvo">
+	<update id="deleteByNoAnduserNo" parameterType="boardvo">
 		<![CDATA[
 			update board 
 				set status=0 
