@@ -1,16 +1,15 @@
 package kr.co.itcen.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +19,9 @@ import kr.co.itcen.mysite.vo.GuestBookVo;
 public class GuestBookDao {
 	
 	@Autowired
+	private SqlSession sqlSession;
+	
+	@Autowired 
 	private DataSource dataSource;
 	
 	public Boolean insert(GuestBookVo vo) {
@@ -127,55 +129,9 @@ public class GuestBookDao {
 		}
 	}
 	
-
 	public List<GuestBookVo> getList() {
-		List<GuestBookVo> result = new ArrayList<GuestBookVo>();
-
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			connection = dataSource.getConnection();
-
-			String sql = "select no,ifnull(content,''),writer,date_format(registerdate,'%Y-%m-%d %h:%i:%s') from guestbook order by registerdate desc";
-			pstmt = connection.prepareStatement(sql);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Long no = rs.getLong(1);
-				String content = rs.getString(2);
-				String writer = rs.getString(3);
-				String registerdate = rs.getString(4);
-
-				GuestBookVo vo = new GuestBookVo();
-				vo.setNo(no);
-				vo.setText(content);
-				vo.setWriter(writer);
-				vo.setRegisterdate(registerdate);
-
-				result.add(vo);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+//		List<GuestBookVo> result = new ArrayList<GuestBookVo>();
+		List<GuestBookVo> result = sqlSession.selectList("guestbook.getList");
 		return result;
 	}
 }
-

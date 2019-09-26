@@ -73,6 +73,7 @@ public class UserDao {
 	public Boolean insert(UserVo vo) throws UserDaoException {
 		
 		int count = sqlSession.insert("user.insert", vo);
+		System.out.println(vo);
 		return count == 1;
 	}
 	
@@ -84,6 +85,16 @@ public class UserDao {
 		UserVo result = sqlSession.selectOne("user.getByEmailAndPassword2",map);
 		return result;
 	}
+	
+//	public Boolean update(UserVo vo) {
+//		Boolean result = false;
+//		int count = sqlSession.update("user.update",vo);
+//		return result;
+//	}
+	
+//	public UserVo get(Long no) {
+//		return sqlSession.selectOne("user.getByNo", no);
+//	}
 	
 	public UserVo get(UserVo vo) {
 		UserVo result = sqlSession.selectOne("user.getByEmailAndPassword1",vo);
