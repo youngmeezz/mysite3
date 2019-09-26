@@ -6,7 +6,7 @@
 	<select id="getList"  resultType="guestbookvo">
 		<![CDATA[
 			select no as no, 
-				   content as text, 
+				   content as content, 
 				   writer as writer, 
 				   date_format(registerdate, '%Y-%m-%d %h:%i:%s') as registerdate
 			  from guestbook
@@ -17,7 +17,7 @@
 	<select id="getList2"  parameterType="long" resultType="guestbookvo">
 		<![CDATA[
 				select no as no, 
-				   	   content as text, 
+				   	   content as content, 
 				       writer as writer, 
 					   date_format(registerdate, '%Y-%m-%d %h:%i:%s') as registerdate
 				  from guestbook
@@ -35,7 +35,9 @@
 	
 	<insert id="insert"  parameterType="guestbookvo">
 		<![CDATA[
-		insert into guestbook values(null,#{content},#{writer},#{registerdate}, now());
+		insert into 
+			guestbook 
+		values(null,#{content},#{writer},#{password},now());
 		]]>
 	</insert>
 	
@@ -43,16 +45,11 @@
 		<!--패스워드가 일치할 떄만 지우기로 했는데  이거 어떻게 함?-->
 		<!--	String sql = "select password from guestbook where no = ?";  -->
 		
-	<delete id="delete" parameterType="geuestbookvo">
-	
-		<if test=" password != '' ">
-				<![CDATA[
-					password = #{password}, 
-				]]>
-				<![CDATA[
-				delete from guestbook where no = #{no};
-				]]>
-		</if>
+	<delete id="delete" parameterType="guestbookvo">
+		<![CDATA[
+		delete from guestbook 
+		where no = #{no} and password = #{password};
+		]]>
 	</delete>
 	
 </mapper>

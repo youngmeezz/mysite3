@@ -32,7 +32,7 @@
 							<td><input type="password" name="password"></td>
 						</tr>
 						<tr>
-							<td colspan=4><textarea name="text" id="content"></textarea></td>
+							<td colspan=4><textarea id="textarea" name="content" ></textarea></td>
 						</tr>
 						<tr>
 							<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>
@@ -43,21 +43,19 @@
 					<li>
 						<table>
 							<c:set var="count" value='${fn:length(list)}' />
-							<ul>
+								<ul>
 								<c:forEach items='${list }' var='vo' varStatus='status'>
 									<tr>
 										<td>${count - status.index}</td>
 										<td>${vo.writer }</td>
 										<td>${vo.registerdate }</td>
-										<td><a
-											href="${pageContext.servletContext.contextPath }/guestbook1/delete/${vo.no}">삭제</a></td>
+										<td><a href="${pageContext.servletContext.contextPath }/guestbook1/delete/${vo.no}">삭제</a></td>
 									</tr>
-								</ul>
-								<tr>
-									<td colspan=4>${fn:replace(vo.text, newline, '<br/>')}
-									</td>
-								</tr>
+									<tr>
+										<td colspan=4>${fn:replace(vo.content, newline, '<br/>')}</td>
+									</tr>
 								</c:forEach>
+							</ul>
 						</table> 
 					</li>
 				</ul>

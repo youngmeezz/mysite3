@@ -3,9 +3,11 @@ package kr.co.itcen.mysite.vo;
 public class BoardVo {
 	
 	
+
 	private Long no;
 	private String title;
 	private String contents;
+	private String name;
 	private int hit;
 	private String registerDate;
 	private int groupNumber;
@@ -15,12 +17,6 @@ public class BoardVo {
 	private int status;
 	
 	
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
 	public Long getNo() {
 		return no;
 	}
@@ -38,6 +34,12 @@ public class BoardVo {
 	}
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getHit() {
 		return hit;
@@ -75,10 +77,20 @@ public class BoardVo {
 	public void setUserNo(Long userNo) {
 		this.userNo = userNo;
 	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", registerDate="
-				+ registerDate + ", groupNumber=" + groupNumber + ", orderNumber=" + orderNumber + ", depth=" + depth
-				+ ", userNo=" + userNo + ", status=" + status + "]";
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", name=" + name + ", hit=" + hit
+				+ ", registerDate=" + registerDate + ", groupNumber=" + groupNumber + ", orderNumber=" + orderNumber
+				+ ", depth=" + depth + ", userNo=" + userNo + ", status=" + status + "]";
 	}
+
+	
 }

@@ -1,7 +1,11 @@
 package kr.co.itcen.mysite.vo;
 
 public class GuestBookVo {
-
+	private Long no;
+	private String content;
+	private String writer;
+	private String password;
+	private String registerdate;
 
 	public Long getNo() {
 		return no;
@@ -9,11 +13,11 @@ public class GuestBookVo {
 	public void setNo(Long no) {
 		this.no = no;
 	}
-	public String getText() {
-		return text;
+	public String getContent() {
+		return content;
 	}
-	public void setText(String text) {
-		this.text = text;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public String getWriter() {
 		return writer;
@@ -35,12 +39,8 @@ public class GuestBookVo {
 	}
 	@Override
 	public String toString() {
-		return "GuestBookVo [no=" + no + ", text=" + text + ", writer=" + writer + ", password=" + password
+		return "GuestBookVo [no=" + no + ", content=" + content + ", writer=" + writer + ", password=" + password
 				+ ", registerdate=" + registerdate + "]";
 	}
-	private Long no;
-	private String text;
-	private String writer;
-	private String password;
-	private String registerdate;
+	
 }
