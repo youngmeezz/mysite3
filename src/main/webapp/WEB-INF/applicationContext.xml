@@ -26,11 +26,11 @@
 
 	<!-- Connection Pool DataSource -->
 	<bean id="dataSource"
-		class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName"
-			value="org.mariadb.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mariadb://192.168.1.78:3306/webdb?characterEncoding=utf8" />
+		class="org.apache.commons.dbcp2.BasicDataSource">
+<!-- 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy" /> -->
+<!-- 		<property name="url" value="jdbc:log4jdbc:mariadb://192.168.1.78:3306/webdb?characterEncoding=utf8" /> -->
+		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
+		<property name="url" value="jdbc:mariadb://192.168.1.78:3306/webdb?characterEncoding=utf8" />
 		<property name="username" value="webdb" />
 		<property name="password" value="webdb" />
 	</bean>

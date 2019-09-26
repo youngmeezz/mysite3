@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook">
+
 	<select id="getList"  resultType="guestbookvo">
 		<![CDATA[
 			select no as no, 
@@ -31,5 +32,27 @@
 				limit 0, 5;
 			]]>
 	</select>
+	
+	<insert id="insert"  parameterType="guestbookvo">
+		<![CDATA[
+		insert into guestbook values(null,#{content},#{writer},#{registerdate}, now());
+		]]>
+	</insert>
+	
+	
+		<!--패스워드가 일치할 떄만 지우기로 했는데  이거 어떻게 함?-->
+		<!--	String sql = "select password from guestbook where no = ?";  -->
+		
+	<delete id="delete" parameterType="geuestbookvo">
+	
+		<if test=" password != '' ">
+				<![CDATA[
+					password = #{password}, 
+				]]>
+				<![CDATA[
+				delete from guestbook where no = #{no};
+				]]>
+		</if>
+	</delete>
 	
 </mapper>
