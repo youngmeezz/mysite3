@@ -23,12 +23,12 @@ public class UserService {
 		return userDao.get(vo);
 	}
 
-	public UserVo update(UserVo vo) {
+	public Boolean update(UserVo vo) {
 		// TODO Auto-generated method stub
 		return userDao.update(vo);
 	}
 	
-	public UserVo getUserByNo(UserVo vo) {
-		return userDao.getByNo(vo);
+	public UserVo getUserByNo(Long no) {
+		return userDao.get(no);
 	}
 }

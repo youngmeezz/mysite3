@@ -1,13 +1,7 @@
 package kr.co.itcen.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,63 +14,33 @@ import kr.co.itcen.mysite.vo.UserVo;
 public class UserDao {
 	
 	@Autowired
-	private DataSource dataSource;
-	
-	@Autowired
 	private SqlSession sqlSession;
 	
-	public UserVo update (UserVo vo){
-		
-		// TODO Auto-generated method stub
-		UserVo result = null;
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			
-			connection = dataSource.getConnection();
-
-			String sql = "update user set name = ?, password = ?, gender = ? where no = ?";
-
-			pstmt = connection.prepareStatement(sql);
-
-			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getGender());
-			pstmt.setLong(4, vo.getNo());
-			
-			pstmt.executeUpdate();	
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			// 자원정리해주기 Connection
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return result;
-	}
-	
+	//회원 가입 할때 insert
 	public Boolean insert(UserVo vo) throws UserDaoException {
 		
 		int count = sqlSession.insert("user.insert", vo);
-		System.out.println(vo);
 		return count == 1;
 	}
 	
+	//회원 정보 수정할때 update
+	public Boolean update(UserVo vo) {
+		int count = sqlSession.update("user.update",vo);
+		return count == 1;
+	}
+	
+	//번호로 검색해서 가져올때의 get 오버로드1
+	public UserVo get(Long no) {
+		return sqlSession.selectOne("user.getByNo", no);
+	}
+	
+	//UserVo vo의 파라미터를 가지고 이메일과 패스워드로 검색해서 가져올때의 get 오버로드2
+	public UserVo get(UserVo vo) {
+		UserVo result = sqlSession.selectOne("user.getByEmailAndPassword1",vo);
+		return result;
+	}
+	
+	//email, password의 파라미터를 가지고 이메일과 패스워드로 검색해서 가져올때의 get 오버로드3
 	public UserVo get(String email,String password) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("email", email);
@@ -86,70 +50,4 @@ public class UserDao {
 		return result;
 	}
 	
-//	public Boolean update(UserVo vo) {
-//		Boolean result = false;
-//		int count = sqlSession.update("user.update",vo);
-//		return result;
-//	}
-	
-//	public UserVo get(Long no) {
-//		return sqlSession.selectOne("user.getByNo", no);
-//	}
-	
-	public UserVo get(UserVo vo) {
-		UserVo result = sqlSession.selectOne("user.getByEmailAndPassword1",vo);
-		return result;
-	}
-	
-	public UserVo getByNo(UserVo vo) {
-		UserVo result = null;
-		
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-
-		try {
-			connection = dataSource.getConnection();
-
-			String sql = "select no,name,gender,email from user where no = ?";
-			pstmt = connection.prepareStatement(sql);
-			pstmt.setLong(1, vo.getNo());
-			
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				Long no = rs.getLong(1);
-				String name = rs.getString(2);
-				String gender = rs.getString(3);
-				String email = rs.getString("email");
-				
-				result = new UserVo();
-				result.setNo(no);
-				result.setName(name);
-				result.setGender(gender);
-				result.setEmail(email);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return result;
-	}
-	
-
 }

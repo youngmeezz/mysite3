@@ -78,7 +78,7 @@ public class UserController {
 			return "redirect:/";
 		}
 		
-		UserVo vo = userService.getUserByNo(authUser);
+		UserVo vo = userService.getUserByNo(authUser.getNo());
 		model.addAttribute("userInfo", vo);
 		return "user/update";
 	}
