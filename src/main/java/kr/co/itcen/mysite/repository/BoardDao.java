@@ -41,10 +41,10 @@ public class BoardDao {
 	
 	
 	//// replyInsert 답글쓰기  업데이트 부분 어떻게 받아와야할지 모르겠???????????????????????///////
-	public Boolean replyInsert(BoardVo boardVo) {
+	public void replyInsert(BoardVo boardVo) {
 		
-		int count = sqlSession.insert("board.replyInsert", boardVo);
-		return count == 1;
+		sqlSession.insert("board.replyInsert", boardVo);
+		
 	}
 	
 	

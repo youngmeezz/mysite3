@@ -55,14 +55,11 @@ public class BoardController {
 	
 	//게시판 글 쓴 view 페이지 가져오기
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String viewForm(@PathVariable("no") Long no,@PathVariable("userNo") Long userNo,HttpSession session) {
+	public String viewForm(@PathVariable("no") Long no,@PathVariable("userNo") Long userNo,Model model) {
 		
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
-		if (authUser != null) {
-			 authUser.getNo();
-			boardService.get(no,userNo);
-		}
+		boardService.get(no,userNo);
+	
 		return "redirect:/board/view" ;
 
 	}
