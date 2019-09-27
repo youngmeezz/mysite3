@@ -32,10 +32,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(@ModelAttribute UserVo vo) {
+	public String join(@ModelAttribute UserVo vo, Model model) {
+		if(vo.getEmail().indexOf("@") < 0) {
+			model.addAttribute("userVo",vo);
+			//파라미터를 model + Attribute
+		}
 		userService.join(vo);
 		return "redirect:/user/joinsuccess";
-	}
+		}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
